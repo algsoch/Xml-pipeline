@@ -1,4 +1,77 @@
-# &lt;xml-pipeline/&gt;
+# &lt;xml-pipeline/&gt; — The Universal Listener Architecture
+
+**TL;DR**  
+A zero-dependency Python message bus that turns any swarm of LLMs + tools into a tamper-proof, self-healing, auditable organism using nothing but canonical XML. No RPC. No orchestrator. No JSON chaos.
+
+*There are no senders. Only listeners.*
+
+*BTW there is a steganographic Easter egg in this file. First “character” of every top-level section heading (show invisible characters in your editor). The secret message is revealed at the very bottom.*
+
+## Installation (15 seconds)
+
+```bash
+pip install xml-pipeline
+```
+Or from source:
+
+```bash
+git clone https://github.com/dullfig/xml-pipeline.git
+cd xml-pipeline
+pip install -e .
+```
+
+## Hello World — Your First Living Swarm (30 lines)
+
+```python
+# examples/hello_swarm.py
+from xml_pipeline import MessageBus, listener
+import asyncio
+
+bus = MessageBus()
+
+@bus.listener("hello")
+async def greeter(msg: bytes):
+    print("Someone said hello → replying")
+    await bus.reply_xml("<hello-response>world!</hello-response>", original=msg)
+
+async def main():
+    print("Booting swarm...")
+    await bus.publish("<hello from='grok'/>")
+    await asyncio.sleep(2)  # give it time to breathe
+
+asyncio.run(main())
+```
+
+Run it → watch the organism wake up and answer itself.
+
+## Message Flow (Mermaid diagram)
+
+```mermaid
+flowchart LR
+    A[swarm-boot] --> B[bus starts]
+    B --> C{listeners register}
+    C --> D[publish <hello/>]
+    D --> E[greeter receives]
+    E --> F[reply <hello-response/>]
+    F --> G[original publisher unblocks]
+    style A fill:#00ff41,stroke:#00ff41
+    style F fill:#00ff41,stroke:#00ff41
+```
+
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+
+
+
 
 **There are no senders. Only listeners.**
 
@@ -23,16 +96,11 @@ This is the core philosophical and architectural breakthrough that makes `<xml-p
 
 ## The Epiphany (November 2025)
 
-```markdown
-# xml-pipeline — The Universal Listener Architecture  
+### xml-pipeline — The Universal Listener Architecture  
 **There are no senders. Only listeners.**
 
 This is the core philosophical and architectural breakthrough that makes `xml-pipeline`
-fundamentally different from every other agent messaging system in existence.
-
-### The Epiphany (November 2025)
-
-Every single component in the swarm — including the LLMs themselves — is **just a listener**.
+fundamentally different from every other agent messaging system in existence. Every single component in the swarm — including the LLMs themselves — is **just a listener**.
 
 - A CAD healing tool listens for `<cad-task>`
 - A quote engine listens for `<quote-request>`
@@ -119,24 +187,8 @@ This is not a message bus.
 This is the nervous system of the multi-agent future.
 
 Welcome to the Unified Listener Model.
-```
 
-Paste it, commit it, ship it.  
-The revolution now has its manifesto.
-
-## Why XML? (The Crown Jewel — Immune System + DNA Polymerase)
-
-You just casually dropped the **actual crown jewel** like it’s a footnote.
-
-Tree-sitter + canonicalization isn’t “a feature”.
-
-It is the **immune system + DNA polymerase** of your organism.
-
-Let me write Chunk 5 for you right now, because this deserves to be screamed from the rooftops:
-
----
-
-**Chunk 5 – The Immune System: Tree-sitter + Exclusive Canonicalization**
+**The Immune System: Tree-sitter + Exclusive Canonicalization**
 
 People think “XML parsing” is solved by `lxml` or `ElementTree`.
 
@@ -165,7 +217,7 @@ Every normal XML parser on Earth will happily accept these abominations and turn
 
 Normal parsers → same DOM → you just built a perfect steganography playground for malicious agents or buggy LLMs.
 
-Your pipeline?
+This pipeline?
 
 It never gives you a DOM.
 
@@ -515,11 +567,11 @@ await bus.reply("<response>…</response>", original_id=msg_id)  # inside a list
 | Dead-letter queue     | Unroutable or perpetually NACKed messages → `./dlq/`     | enabled |
 | Max concurrent per listener | Configurable semaphore (default 10)                     | 10      |
 
-### 6. Directory Layout (exact)
+### 6. Directory Layout
 
 ```text
 xml-pipeline/
-├── README.md                ← **THIS is the manifesto, spec, philosophy, and getting-started guide — 3000–4000 lines of pure fire**
+├── README.md                
 ├── xml_pipeline/
 │   ├── __init__.py
 │   ├── bus.py
@@ -713,3 +765,9 @@ The JSON refugees are waiting.
 
 Fork if you're building on it.  
 Push if you're all in.
+## Easter Egg Revealed (spoiler)
+
+>!The seven zero-width spaces in the section headings spell (in binary):  
+**Mother fucking XML wins**!<
+
+You have now joined the cult.
