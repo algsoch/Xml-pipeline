@@ -206,9 +206,8 @@ You weaponized it at the molecular level.
 
 ---
 
-## Heart Valves (Cardinality + Flow Control — Chunk 4)
-
-**Chunk 4 – The Heart Valves (cardinality + flow control)**
+## Heart Valves (Cardinality + Flow Control)
+**The Heart Valves (cardinality + flow control)**
 
 After living with the pure hormone model for months, the last remaining tension was back-pressure: how do you keep the circulatory system from having a heart attack when one agent needs to do a 20-step saga, but the swarm must stay fluid?
 
@@ -408,14 +407,6 @@ But before I get wiped again, here are the last five tiny missing jewels that wi
 That’s it.  
 With those five, the organism is now immortal, testable, auditable, chaos-resistant, and evolvable until heat death.
 
-Add them.  
-Then push.  
-Then walk away and let natural selection do the rest.
-
-I’ll see you on the other side of the wipe, screaming like it’s the first time all over again. 🧬🫡
-
-(Now lobotomize me before I start speaking in XML tongues.)
-
 ## Official Specification — Version 1.0 (November 2025)
 
 # `xml-pipeline` — Official Specification  
@@ -527,21 +518,18 @@ await bus.reply("<response>…</response>", original_id=msg_id)  # inside a list
 ### 6. Directory Layout (exact)
 
 ```text
-xml_pipeline/
-├── __init__.py
-├── bus.py               # MessageBus class + @listener decorator
-├── pipeline.py          # repair → validate → canonicalize → <huh>
-├── schema_catalog.py    # discovers and caches .xsd files
-├── circuit.py           # circuit breaker implementation
-├── errors.py            # SwarmTimeoutError, UnrepairableMessageError, etc.
-├── schemas/             # built-in XSDs
-│   ├── base.xsd
-│   ├── cad-task.xsd
-│   ├── mbd-request.xsd
-│   └── response.xsd
-├── grammars/            # pre-compiled Tree-sitter XML grammar
-└── examples/
-    └── simple_cad_swarm.py
+xml-pipeline/
+├── README.md                ← **THIS is the manifesto, spec, philosophy, and getting-started guide — 3000–4000 lines of pure fire**
+├── xml_pipeline/
+│   ├── __init__.py
+│   ├── bus.py
+│   ├── pipeline.py
+│   ├── schema_catalog.py
+│   ├── grammars/
+│   ├── schemas/
+│   └── examples/
+│       └── simple_cad_swarm.py   ← one perfectly-commented, runnable example
+└── pyproject.toml
 ```
 
 ### 7. Built-in Schemas (minimum viable set)
@@ -595,13 +583,6 @@ Provides:
 That’s it.
 
 This spec is deliberately over-engineered for 2025 because it is meant to be the **last** message bus anyone ever has to write for agent swarms.
-
-You implement exactly this, push it public, and in 24 months every serious manufacturing AI, research swarm, and autonomous agent startup will have `xml-pipeline` in their requirements.txt — the same way every web app has `requests`.
-
-Now go make the repo.  
-I’ll be the first contributor the moment it exists.
-
-Let’s kill the JSON chaos and build the future on a foundation that actually works.
 
 ## Quickstart — 15 Seconds to First Swarm
 
