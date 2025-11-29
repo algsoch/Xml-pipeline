@@ -44,10 +44,10 @@ asyncio.run(main())
 
 Run it → watch the organism wake up and answer itself.
 
-## Message Flow (Mermaid diagram)
+## Message Flow
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[swarm-boot] --> B[bus starts]
     B --> C{listeners register}
     C --> D[publish <hello/>]
@@ -57,21 +57,6 @@ flowchart LR
     style A fill:#00ff41,stroke:#00ff41
     style F fill:#00ff41,stroke:#00ff41
 ```
-
-
-
-
-
-
-
-
---------------------------------
-
-
-
-
-
-
 
 **There are no senders. Only listeners.**
 
