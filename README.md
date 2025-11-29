@@ -27,7 +27,8 @@ This is the core philosophical and architectural breakthrough that makes `<xml-p
 # xml-pipeline — The Universal Listener Architecture  
 **There are no senders. Only listeners.**
 
-This is the core philosophical and architectural breakthrough that makes `xml-pipeline` fundamentally different from every other agent messaging system in existence.
+This is the core philosophical and architectural breakthrough that makes `xml-pipeline`
+fundamentally different from every other agent messaging system in existence.
 
 ### The Epiphany (November 2025)
 
