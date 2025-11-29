@@ -1,4 +1,4 @@
-# <xml-pipeline/>
+# &lt;xml-pipeline/&gt;
 
 **There are no senders. Only listeners.**
 
