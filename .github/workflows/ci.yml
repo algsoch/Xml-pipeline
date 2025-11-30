@@ -1,0 +1,13 @@
+name: Build Wheels
+on: [push, tag]
+jobs:
+  build_wheels:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with: {python-version: '3.12'}
+    - run: pip install build twine cibuildwheel
+    - run: cibuildwheel --output-dir wheelhouse
+    - uses: actions/upload-artifact@v4
+      with: {name: wheels, path: wheelhouse/*.whl}
