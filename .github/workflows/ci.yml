@@ -1,13 +1,75 @@
-name: Build Wheels
-on: [push, tag]
+name: CI & Wheels
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  tag:
+    prefix: 'v'
+
 jobs:
-  build_wheels:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
-      with: {python-version: '3.12'}
-    - run: pip install build twine cibuildwheel
-    - run: cibuildwheel --output-dir wheelhouse
+      with:
+        python-version: '3.12'
+    - run: pip install -e .[all] pytest
+    - run: pytest tests/ -v  # Your smoke tests + repair checks
+
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false  # Keep building if one fails
+
+    matrix:
+      include:
+        - os: ubuntu-latest
+          cibw_musllinux: cp39-* cp310-* cp311-* cp312-  # Linux x86_64/aarch64 (musl for slim wheels)
+        - os: macos-13
+          cibw_macosx_universal2: cp39-* cp310-* cp311-* cp312-  # macOS universal2 (Intel + Apple Silicon)
+        - os: windows-latest
+          cibw_msvc: cp39-* cp310-* cp311-* cp312-  # Windows x86_64 (MSVC compiler for .dll)
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      name: Install Python
+      with:
+        python-version: ${{ matrix.python-version || '3.12' }}  # Flex for matrix
+
+    - name: Install cibuildwheel
+      run: |
+        pip install cibuildwheel==2.18.1  # Latest stable
+        pip install twine  # For upload check
+
+    - name: Build wheels
+      run: |
+        cibuildwheel --output-dir wheelhouse
+        # Optional: python -m twine check wheelhouse/*.whl  # Validate wheels
+
     - uses: actions/upload-artifact@v4
-      with: {name: wheels, path: wheelhouse/*.whl}
+      with:
+        name: wheels-${{ matrix.os }}
+        path: ./wheelhouse/*.whl
+        if-no-files-found: ignore  # Graceful if no wheels
+
+  upload_pypi:
+    needs: [build_wheels]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')  # Only on tags
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Upload wheels to PyPI
+      run: |
+        pip install twine
+        twine upload --skip-existing artifacts/*/*/*.whl  # Skips if already uploaded
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}  # Add this secret in repo settings
