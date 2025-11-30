@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xml-pipeline"
+version = "0.2.0"
+description = "Tamper-proof XML nervous system for AI agent swarms"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "dullfig", email = "your@email.com"}]  # Swap in real email
+dependencies = [
+    "lxml>=4.9",
+    "tree-sitter>=0.21",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+redis = ["redis"]
+nats = ["nats-py"]
+all = ["redis", "nats-py"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+"xml_pipeline" = [
+    "tree_sitter_langs/*",
+    "tree_sitter_langs/xml.*",  # Bundles .so/.dylib/.dll
+    "schemas/*.xsd",
+    "grammars/*",
+]
+
+[tool.setuptools_scm]
+write_to = "xml_pipeline/_version.py"
+root = "."
