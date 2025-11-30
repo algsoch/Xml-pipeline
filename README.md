@@ -1,4 +1,4 @@
-# &lt;xml-pipeline/&gt; — The Universal Listener Architecture
+# &lt;xml-pipeline/&gt; — The Universal Listener Architecture  
 
 **TL;DR**  
 A zero-dependency Python message bus that turns any swarm of LLMs + tools into a tamper-proof, self-healing, auditable organism using nothing but canonical XML. No RPC. No orchestrator. No JSON chaos.
