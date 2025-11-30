@@ -48,14 +48,12 @@ Run it → watch the organism wake up and answer itself.
 
 ```mermaid
 flowchart TD
-    A[swarm-boot] --> B[bus starts]
+    A[&lt;swarm-boot&gt;] --> B[bus starts]
     B --> C{listeners register}
-    C --> D[publish <hello/>]
-    D --> E[greeter receives]
-    E --> F[reply <hello-response/>]
+    C --> D[publish &lt;hello/&gt;]
+    D --> E[greeter receives &lt;hello/&gt;]
+    E --> F[reply &lt;hello-response/&gt;]
     F --> G[original publisher unblocks]
-    style A fill:#00ff41,stroke:#00ff41
-    style F fill:#00ff41,stroke:#00ff41
 ```
 
 **There are no senders. Only listeners.**
