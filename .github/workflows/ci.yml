@@ -133,10 +133,17 @@ jobs:
       shell: bash
       run: |
         # Find and install the appropriate wheel or fallback to sdist
-        if ls all-dist/*.whl 1> /dev/null 2>&1; then
-          pip install all-dist/*.whl[all]
+        WHEEL=$(find all-dist -name "*.whl" -type f | head -n 1)
+        if [ -n "$WHEEL" ]; then
+          pip install "$WHEEL[all]" || pip install "$WHEEL"
         else
-          pip install all-dist/*.tar.gz[all]
+          SDIST=$(find all-dist -name "*.tar.gz" -type f | head -n 1)
+          if [ -n "$SDIST" ]; then
+            pip install "$SDIST[all]" || pip install "$SDIST"
+          else
+            echo "No packages found!"
+            exit 1
+          fi
         fi
     
     - name: Test import
