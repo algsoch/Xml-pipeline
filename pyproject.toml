@@ -41,10 +41,10 @@ nats = ["nats-py"]
 all = ["redis", "nats-py"]
 
 [tool.setuptools]
-packages = ["xml-pipeline"]
+packages = ["xml_pipeline"]
 
 [tool.setuptools.package-data]
-"xml-pipeline" = [
+"xml_pipeline" = [
     "tree_sitter_langs/*",
     "tree_sitter_langs/xml.*",  # Bundles .so/.dylib/.dll
     "schemas/*.xsd",
@@ -52,5 +52,5 @@ packages = ["xml-pipeline"]
 ]
 
 [tool.setuptools_scm]
-write_to = "xml-pipeline/_version.py"
+write_to = "xml_pipeline/_version.py"
 root = "."
