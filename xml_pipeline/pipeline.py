@@ -221,14 +221,12 @@ class Pipeline:
         # 2. Sort attributes alphabetically
         self._sort_attributes_recursively(elem)
 
-        # 3. Final C14N
+        # 3. Simple serialization (comments already removed by repair step)
         return ET.tostring(
             elem,
             encoding="utf-8",
             xml_declaration=False,
             pretty_print=False,
-            exclusive=True,
-            with_comments=False,
         ).strip() + b"\n"
 
     def _force_canonical_namespaces(self, elem: ET.Element):
