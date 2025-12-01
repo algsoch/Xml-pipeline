@@ -40,12 +40,11 @@ redis = ["redis"]
 nats = ["nats-py"]
 all = ["redis", "nats-py"]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["xml-pipeline*"]
+[tool.setuptools]
+packages = ["xml-pipeline"]
 
 [tool.setuptools.package-data]
-"xml_pipeline" = [
+"xml-pipeline" = [
     "tree_sitter_langs/*",
     "tree_sitter_langs/xml.*",  # Bundles .so/.dylib/.dll
     "schemas/*.xsd",
@@ -53,5 +52,5 @@ include = ["xml-pipeline*"]
 ]
 
 [tool.setuptools_scm]
-write_to = "xml_pipeline/_version.py"
+write_to = "xml-pipeline/_version.py"
 root = "."
