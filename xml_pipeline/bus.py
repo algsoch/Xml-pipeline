@@ -40,7 +40,7 @@ log = logging.getLogger("xml_pipeline.bus")
 ListenerFunc = Callable[[bytes], Awaitable[Optional[bytes]]]
 T = TypeVar("T")
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Response:
     xml: bytes
     message_id: Optional[str] = None
